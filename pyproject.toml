@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "newsletter-app"
+version = "0.1.0"
+description = ""
+authors = ["Nicolas Neudeck <nicolas.neudeck@outlook.de>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<4.0"
+streamlit = "^1.24.1"
+yfinance = "^0.2.25"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
