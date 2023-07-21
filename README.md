@@ -1,6 +1,6 @@
 # Newsletter App
 
-The Newsletter App is a web application that displays newsletters from various companies. It serves as a valuable resource for research, whether you are writing your own newsletter or looking for discounts and promotions from different businesses. The app is built using Python, Streamlit, and MongoDB.
+The Newsletter App is a web application that displays newsletters from various companies. It serves as a valuable resource for research, whether you are writing your own newsletter or looking for discounts and promotions from different businesses. The app is built using Python, Streamlit, and SQLite.
 
 ## Setup
 
