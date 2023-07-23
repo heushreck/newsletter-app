@@ -1,3 +1,4 @@
+import datetime
 import streamlit as st 
 import streamlit.components.v1 as components
 import sqlite3
@@ -7,25 +8,26 @@ from utils.handle_db import insert_company, insert_newsletter, get_companies, ge
 
 # email emojy in title
 st.set_page_config(page_title="Newletter Search", page_icon="📧" )     
-page_bg_img = f"""
-<style>
-[data-testid="stAppViewContainer"] > .main {{
-background-image: url("Image-of-your-choice");
-background-size: 100%;
-display: flex;
-background-position: top left;
-background-repeat: no-repeat;
-background-attachment: local;
-}}
-[data-testid="stHeader"] {{
-background: rgba(0,0,0,0);
-}}
-[data-testid="stToolbar"] {{
-right: 2rem;
-}}
-</style>
-"""
-st.markdown(page_bg_img, unsafe_allow_html=True)
+# page_bg_img = f"""
+# <style>
+# [data-testid="stAppViewContainer"] > .main {{
+# background-image: rgb(231, 222, 205);
+# background-size: 100%;
+# display: flex;
+# background-position: top left;
+# background-repeat: no-repeat;
+# background-attachment: local;
+
+# }}
+# [data-testid="stHeader"] {{
+# background: rgb(231, 222, 205);
+# }}
+# [data-testid="stToolbar"] {{
+# right: 2rem;
+# }}
+# </style>
+# """
+# st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
 conn = sqlite3.connect("newsletter.db")
@@ -47,17 +49,21 @@ for company in companies:
 
 st.markdown("#####")  
 if db_size>0:                   
-    option = st.selectbox('Select Company 📱', list(companies_dict.keys()))
-    newsletters = get_newsletters_by_company(conn, c, companies_dict[option].email)
-    col1, col2, col3 = st.columns(3)
-    col1.markdown(f"### {option}")
-    # image of company logo
-    col2.image(companies_dict[option].logo_url, width=100)
-    col3.markdown(f"### {len(newsletters)} Newsletters\n in total")
-    for newsletter in newsletters:     
-        st.markdown('##')
-        readable_date = newsletter.date.split(" ")[0]
-        with st.expander(f"{readable_date} - {newsletter.subject}"):
-            components.html(newsletter.html, height=500, scrolling=True)
+    option = st.selectbox(label='Select Company', options=list(companies_dict.keys()))
+    if option:
+        newsletters = get_newsletters_by_company(conn, c, companies_dict[option].email)
+        col1, col2 = st.columns([2,1])
+        col1.image(companies_dict[option].logo_url, width=400)
+        print(newsletters[0].date)
+        min_date = min([datetime.datetime.fromisoformat(newsletter.date) for newsletter in newsletters])
+        days_ago = (datetime.datetime.now().astimezone() - min_date).days
+        avg_days = days_ago // len(newsletters)
+        # in col two show how many newsletters in total and how many days on average between newsletters
+        col2.markdown(f"**{len(newsletters)}** newsletters sent in the last **{days_ago}** days. On average **{avg_days}** days between newsletters.")
+        for newsletter in newsletters:     
+            st.markdown('##')
+            readable_date = newsletter.date.split(" ")[0]
+            with st.expander(f"{readable_date} - {newsletter.subject}"):
+                components.html(newsletter.html, height=500, scrolling=True)
 else:
     st.info('Database is Empty.', icon="ℹ️")
