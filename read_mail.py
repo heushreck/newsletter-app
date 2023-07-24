@@ -56,13 +56,22 @@ def write_to_database(emails):
     for email in emails:
         insert_newsletter(conn, c, email)
 
+def edit_html(emails):
+    # edit the html my replacing the email: neues.brief@outlook.com with example@email.com
+    for email in emails:
+        email.html = email.html.replace(USER, "example@email.com")
+        # delete all hrefs links
+        email.html = email.html.replace("href", "href_")
+    return emails
+
 def main():
     today = datetime.today()
     yesterday = today - timedelta(days=1)
     # convert datetime to date
     yesterday = yesterday.date()
     new_emails = get_emails(yesterday)
-    save_files(new_emails)
+    # save_files(new_emails)
+    new_email = edit_html(new_emails)
     write_to_database(new_emails)
     print(f"{len(new_emails)} new emails saved to database")
 

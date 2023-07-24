@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 from modules.company import Company
 from modules.newsletter import Newsletter
@@ -5,8 +6,8 @@ from modules.newsletter import Newsletter
 
 def insert_company(conn, c, company: Company):
     with conn:
-        c.execute("insert into companies values (:id, :name, :url, :email, :logo_url, :small_logo_url)", 
-                  {'id': company.id, 'name': company.name, 'url': company.url, 'email': company.email, 'logo_url': company.logo_url, 'small_logo_url': company.small_logo_url})
+        c.execute("insert into companies values (:id, :name, :url, :email, :logo_url, :bio)", 
+                  {'id': company.id, 'name': company.name, 'url': company.url, 'email': company.email, 'logo_url': company.logo_url, 'bio': company.bio})
         
 def insert_newsletter(conn, c, newsletter: Newsletter):
     with conn:
@@ -25,4 +26,4 @@ def get_newsletters_by_company(conn, c, company_email):
         c.execute("select * from newsletters where sender = :sender", {'sender': company_email})
         result = c.fetchall()
         # map to Newsletter object
-        return list(map(lambda x: Newsletter(x[0], x[1], x[2], x[3], x[4], x[5]), result))
+        return list(map(lambda x: Newsletter(x[0], x[1], x[2], x[3], x[4], datetime.datetime.fromisoformat(x[5])), result))
