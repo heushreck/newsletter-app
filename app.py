@@ -8,7 +8,7 @@ from PIL import Image
 
 
 # email emojy in title
-st.set_page_config(page_title="Newletter Search", page_icon="📬", layout="centered")     
+st.set_page_config(page_title="Search Newsletters", page_icon="📬", layout="centered")     
 # page_bg_img = f"""
 # <style>
 # [data-testid="stAppViewContainer"] > .main {{
@@ -53,6 +53,8 @@ c.execute("select count(*) from companies")
 db_size = c.fetchone()[0] 
 
 companies = get_companies(conn, c)
+# sort companies by name
+companies = sorted(companies, key=lambda x: x.name, reverse=False)
 companies_dict = {}
 for company in companies:
     companies_dict[company.name] = company
@@ -79,6 +81,9 @@ if db_size>0:
             print(f"Error: {e}")
             col2.image(companies_dict[option].logo_url, width=200)
         newsletters = get_newsletters_by_company(conn, c, companies_dict[option].email)
+        if len(newsletters) == 0:
+            st.info(f"No newsletters found for {option}", icon="ℹ️")
+            st.stop()
         min_date = min([newsletter.date for newsletter in newsletters])
         days_ago = (datetime.datetime.now().astimezone() - min_date).days
         avg_days = days_ago // len(newsletters)

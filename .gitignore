@@ -134,3 +134,5 @@ credentials.env
 # data
 data/
 *.db
+
+new_logos/

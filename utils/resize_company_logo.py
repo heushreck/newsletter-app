@@ -2,9 +2,9 @@
 import os
 from PIL import Image
 
-for filename in os.listdir('logos'):
+for filename in os.listdir('new_logos'):
     if filename.endswith('.png'):
-        img = Image.open('logos/'+filename)
+        img = Image.open('new_logos/'+filename)
         # create a new transparent image with the size 400x200
         new_img = Image.new('RGBA', (400, 200), (0, 0, 0, 0))
         # resize the image to have a height of 185px
@@ -15,9 +15,4 @@ for filename in os.listdir('logos'):
         # paste the resized image into the new image in the center
         new_img.paste(img, (int((400-img.width)/2), int((200-img.height)/2)))
         # save the new image
-        new_img.save('logos2/'+filename)
-
-        
-        
-
-
+        new_img.save('logos/'+filename)

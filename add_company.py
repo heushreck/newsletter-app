@@ -3,7 +3,6 @@ from modules.company import Company
 from utils.handle_db import get_companies, insert_company
 import pandas as pd
 
-
 def main():
     conn = sqlite3.connect("newsletter.db")
     c = conn.cursor()
@@ -16,7 +15,6 @@ def main():
                             logo_url varchar(255) not null,
                             bio varchar(255) not null
                         );""")
-    
 
     # read all companies from from db
     existing_companies = get_companies(conn, c)

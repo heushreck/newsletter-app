@@ -71,7 +71,7 @@ def main():
     yesterday = yesterday.date()
     new_emails = get_emails(yesterday)
     # save_files(new_emails)
-    new_email = edit_html(new_emails)
+    new_emails = edit_html(new_emails)
     write_to_database(new_emails)
     print(f"{len(new_emails)} new emails saved to database")
 
