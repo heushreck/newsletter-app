@@ -64,7 +64,7 @@ for company in companies:
 
 
 # create tabs for search and stats
-search_tab, stats_tab = st.tabs(["🔬 Search ", "📊 Stats"])
+search_tab, stats_tab = st.tabs(["🔬 Search ", "📋 Stats"])
 
 
 ### TAB 1 - SEARCH NEWSLETTERS ###
@@ -97,8 +97,9 @@ if db_size>0:
         min_date = min([newsletter.date for newsletter in newsletters])
         days_ago = (datetime.datetime.now().astimezone() - min_date).days
         avg_days = days_ago // len(newsletters)
-        # in col two show how many newsletters in total and how many days on average between newsletters
         search_tab.markdown(f"{companies_dict[option].bio} On average, they send out a newsletter every **{avg_days}** days.")
+        search_tab.markdown(f"Email: {companies_dict[option].email} - Website: {companies_dict[option].url}")
+        
         # sort newsletters by date
         newsletters = sorted(newsletters, key=lambda x: x.date, reverse=True)
         current_month = None
