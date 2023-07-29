@@ -27,3 +27,10 @@ def get_newsletters_by_company(conn, c, company_email):
         result = c.fetchall()
         # map to Newsletter object
         return list(map(lambda x: Newsletter(x[0], x[1], x[2], x[3], x[4], datetime.datetime.fromisoformat(x[5])), result))
+    
+def get_newsletters_for_stats(conn, c):
+    with conn:
+        c.execute("select * from newsletters")
+        result = c.fetchall()
+        # map to Newsletter object
+        return list(map(lambda x: Newsletter(x[0], x[1], x[2], x[3], x[4], datetime.datetime.fromisoformat(x[5])), result))
