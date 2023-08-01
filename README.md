@@ -35,7 +35,32 @@ Once the dependencies are installed, you can activate the virtual environment by
 ```
 poetry shell
 ```
+## Initialize the Database
 
+To get the Newsletter App up and running with the latest company information and email data, follow these steps:
+
+### 1. Companies CSV File
+
+The `companies.csv` file contains information about various companies. Before initializing the database, ensure that this CSV file is updated with the latest company information. You can modify the existing entries or add new ones as needed.
+
+### 2. Adding Companies to the Database
+
+To add the companies from the `companies.csv` file to the SQLite database, run the following command in the venv:
+```
+python3 add_company.py
+```
+
+### 3. Importing Emails Daily
+
+To keep the app up to date with the latest emails, you can set up a scheduled task using a Lambda function (if deploying on a cloud platform) or a cron job (if deploying on a server). The `read_mail.py` script will be executed every day to import emails from the previous day. Here's an example of a cron job:
+```
+0 6 * * * cd location/of/newsletter_app/ && poetry run python3 read_mail.py
+```
+n the above cron job, the script `read_mail.py` is set to run every day at 6:00 AM. Make sure to replace `location/of/newsletter_app/` with the actual path to the root folder of your Newsletter App project.
+
+### 4. Site Ready to Display Companies and Emails
+
+Once the `add_company.py` script is executed to populate the database with company information and the `read_mail.py` script is set up to import emails daily, your site should be ready to display companies and their corresponding emails.
 ## Running the App
 
 With the virtual environment activated, you can now start the Newsletter App using the following command:
@@ -48,12 +73,12 @@ This will launch the app, and you can access it through your web browser at `htt
 
 ## Live Example
 
-Check out the live example of the Newsletter App [here](http://www.example-newsletter-app.com).
+Check out the live example of the Newsletter App [here](http://13.53.108.5:8501/).
 
 Please note that this link might not be active indefinitely, as it is a live instance and could be taken down at any time.
 
-& Contact
+## Contact
 
-If you have any questions or need further assistance, please don't hesitate to contact us at [nicolas.neudeck@outlook.de](mailto:nicolas.neudeck@outlook.de).
+If you have any questions or need further assistance, please don't hesitate to contact me at [nicolas.neudeck@outlook.de](mailto:nicolas.neudeck@outlook.de) or on [LinkedIn](https://www.linkedin.com/in/nicolasneudeck/).
 
 Happy exploring and enjoy using the Newsletter App!
