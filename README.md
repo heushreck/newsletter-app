@@ -1,14 +1,16 @@
 # Newsletter App
 
-The Newsletter App is a web application that displays newsletters from various companies. It serves as a valuable resource for research, whether you are writing your own newsletter or looking for discounts and promotions from different businesses. The app is built using Python, Streamlit, and SQLite.
+The Newsletter App is a web application that displays newsletters from various companies. It serves as a valuable resource for research, whether you are writing your own newsletter or looking for discounts and promotions from different businesses. The app is built using Python, Streamlit, and SQLite. 
 
+![Newsletter App Screenshot](images/website_screenshot.png)
+Try it our [here](http://13.53.108.5:8501/)
 ## Setup
 
 To get started with the Newsletter App, follow these steps:
 
 1. Clone the repository to your local machine:
 ```bash
-git clone <repository-url>
+git clone https://github.com/heushreck/newsletter-app.git
 cd newsletter-app
 ```
 
